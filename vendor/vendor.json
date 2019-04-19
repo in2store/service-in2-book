@@ -1,0 +1,458 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "VsE3zx2d8kpwj97TWhYddzAwBrY=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/fatih/color",
+			"path": "github.com/fatih/color",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "7NP1qUMF8Kx1y0zANxx0e+oq9Oo=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/fsnotify/fsnotify",
+			"path": "github.com/fsnotify/fsnotify",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "K6icEVf2CuBzhLm/MGpRd1btshM=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/go-sql-driver/mysql",
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "uFNLkTxk8BkHTk0Jcub2lj2BX4M=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/google/uuid",
+			"path": "github.com/google/uuid",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "QdSIO+gp41BqNti0ZDVdXvfDvDo=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/gorilla/websocket",
+			"path": "github.com/gorilla/websocket",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "bWGI7DqWg6IdhfamV96OD+Esa+8=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl",
+			"path": "github.com/hashicorp/hcl",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "XQmjDva9JCGGkIecOgwtBEMCJhU=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/hcl/ast",
+			"path": "github.com/hashicorp/hcl/hcl/ast",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "1GmX7G0Pgf5XprOh+T3zXMXX0dc=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/hcl/parser",
+			"path": "github.com/hashicorp/hcl/hcl/parser",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "encY+ZtDf4nJaMvsVL2c+EJ2r3Q=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/hcl/printer",
+			"path": "github.com/hashicorp/hcl/hcl/printer",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "+qJTCxhkwC7r+VZlPlZz8S74KmU=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/hcl/scanner",
+			"path": "github.com/hashicorp/hcl/hcl/scanner",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "oS3SCN9Wd6D8/LG0Yx1fu84a7gI=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/hcl/strconv",
+			"path": "github.com/hashicorp/hcl/hcl/strconv",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "c6yprzj06ASwCo18TtbbNNBHljA=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/hcl/token",
+			"path": "github.com/hashicorp/hcl/hcl/token",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "PwlfXt7mFS8UYzWxOK5DOq0yxS0=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/json/parser",
+			"path": "github.com/hashicorp/hcl/json/parser",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "afrZ8VmAwfTdDAYVgNSXbxa4GsA=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/json/scanner",
+			"path": "github.com/hashicorp/hcl/json/scanner",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "fNlXQCQEnb+B3k5UDL/r15xtSJY=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/hashicorp/hcl/json/token",
+			"path": "github.com/hashicorp/hcl/json/token",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "BFQR9OPWYz7e7Oe9eP2NDASoaks=",
+			"path": "github.com/johnnyeven/libtools/conf",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "b5E8p5uBKRSzrHnO3dOG5XbtA+E=",
+			"path": "github.com/johnnyeven/libtools/conf/presets",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "69txjtq43bcpcLCTGWhYxOmGeGU=",
+			"path": "github.com/johnnyeven/libtools/courier",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "c+N5ksRHsPzCAxrvD+m/y/DtmVs=",
+			"path": "github.com/johnnyeven/libtools/courier/enumeration",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "kojpT+Yg4e7Iyc/bxn9+aAq2MlQ=",
+			"path": "github.com/johnnyeven/libtools/courier/httpx",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "s7dfMTzQH30Ktbd3IbU6lkiBSfo=",
+			"path": "github.com/johnnyeven/libtools/courier/status_error",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "QkTiIOIrkDAos3jBn6VG70fJvEM=",
+			"path": "github.com/johnnyeven/libtools/courier/swagger",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "fBebhRuISrgMUi12zcZfyZaFRsY=",
+			"path": "github.com/johnnyeven/libtools/courier/transport_http",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "xQn1X658m6t21kB5WQFVyc8SSVc=",
+			"path": "github.com/johnnyeven/libtools/courier/transport_http/transform",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "MEdikhzbGJyZR4576rQiEOYdy/s=",
+			"path": "github.com/johnnyeven/libtools/docker",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "tCFEvmX1jTWpZrdw1/9oFlwrzTY=",
+			"path": "github.com/johnnyeven/libtools/duration",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "b6Z4c/dKYsT14vsRoMnWeiovhbQ=",
+			"path": "github.com/johnnyeven/libtools/env",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "Lx6VApqmoQuMb2vYwEPRDOjEsAY=",
+			"path": "github.com/johnnyeven/libtools/executil",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "lSQAvAWBj9DLMO7zSaAWKHR0BY8=",
+			"path": "github.com/johnnyeven/libtools/godash",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "7Y9jOgUyTwsy7+iMujVSTFr2bVQ=",
+			"path": "github.com/johnnyeven/libtools/log",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "OnBJJd3T+CUi4h+zt6W5HhCtDJs=",
+			"path": "github.com/johnnyeven/libtools/log/context",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "bijz7Os7bnVH7ITXT/5GJcWyYiY=",
+			"path": "github.com/johnnyeven/libtools/log/hooks",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "69ldo9aan7fWQZuNODrgZXgVz6s=",
+			"path": "github.com/johnnyeven/libtools/ptr",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "fTp8XtOz5vbdF/gHpdgsce6iUTc=",
+			"path": "github.com/johnnyeven/libtools/reflectx",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "6jqzEH5uqnjmDG8zTW7CDgzXljQ=",
+			"path": "github.com/johnnyeven/libtools/service/dockerizier",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "9F5IPI0K5zXhog2+IXQxgAZQmKc=",
+			"path": "github.com/johnnyeven/libtools/servicex",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "mK1XUAbY10DjEeKg5P4FoFyDL3U=",
+			"path": "github.com/johnnyeven/libtools/servicex/internal",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "y2zz6cn+kiSLjKNnpcWZVl6ejPc=",
+			"path": "github.com/johnnyeven/libtools/sqlx",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "OAIiylfnYeCL53vzzmrdfkOLwJk=",
+			"path": "github.com/johnnyeven/libtools/sqlx/builder",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "zlsIJ991yVPstuC8xIh+Wp5gTCw=",
+			"path": "github.com/johnnyeven/libtools/sqlx/data_type",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "H6B3e1uVGtR5/vg1cW9J6fzJbaU=",
+			"path": "github.com/johnnyeven/libtools/sqlx/mysql",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "QnoQdqzs3Tyb3v0LN2BLOePlOC4=",
+			"path": "github.com/johnnyeven/libtools/sqlx/mysql_logger_driver",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "fIYIy8qE8HVaoy2+CFRk1phASAY=",
+			"path": "github.com/johnnyeven/libtools/sqlx/presets",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "AhU/fDhlY9g3cYzWmTAsHFpZG8I=",
+			"path": "github.com/johnnyeven/libtools/strutil",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "qcq5snNZa6XJfz7z/w5UjPRvMJ0=",
+			"path": "github.com/johnnyeven/libtools/timelib",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "8zSEVoeVfdSsohROFIhWBVhzEGw=",
+			"path": "github.com/johnnyeven/libtools/validate",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "YSgHvU6kJLnhQqR2NBxdHDvGS1Q=",
+			"path": "github.com/johnnyeven/libtools/validate/validatetpl",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "T+kh2poktvucf6QrY3nRo09otto=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/julienschmidt/httprouter",
+			"path": "github.com/julienschmidt/httprouter",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "9CxtAyVNPsScpfghpxfapxMPniU=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/magiconair/properties",
+			"path": "github.com/magiconair/properties",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "XEV3BI3nHA/rNa/tIgB7fVCrDww=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/mattn/go-colorable",
+			"path": "github.com/mattn/go-colorable",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "U6lX43KDDlNOn+Z0Yyww+ZzHfFo=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/mattn/go-isatty",
+			"path": "github.com/mattn/go-isatty",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "J+g0oZePWp2zSIISD2dZZKTxmgg=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/mitchellh/mapstructure",
+			"path": "github.com/mitchellh/mapstructure",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "NzzMfGmmPoTGVwLZDkj3FXXDvCA=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/pelletier/go-toml",
+			"path": "github.com/pelletier/go-toml",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "ySaT8G3I3y4MmnoXOYAAX0rC+p8=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/sirupsen/logrus",
+			"path": "github.com/sirupsen/logrus",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "koMbVURsXSZmMCSzbfqaHYPEaMw=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/afero",
+			"path": "github.com/spf13/afero",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "HcOjO9+cwl+xYnkiGuIeesqwBs8=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/afero/mem",
+			"path": "github.com/spf13/afero/mem",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "So+ok+Fp2ztieiuZXD/wp8UJhS0=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/cast",
+			"path": "github.com/spf13/cast",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "WYd7aI5YkeiRSv5pqr12emezBIg=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/cobra",
+			"path": "github.com/spf13/cobra",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "kmcWtDErtMPA3+o7+B4MDC3z+T0=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/jwalterweatherman",
+			"path": "github.com/spf13/jwalterweatherman",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "VK+UsykzUMkaKl2ankiyutolraE=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/pflag",
+			"path": "github.com/spf13/pflag",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "hpG5d0Br8qZ1ms7BCy/ZplK58KU=",
+			"origin": "github.com/johnnyeven/libtools/vendor/github.com/spf13/viper",
+			"path": "github.com/spf13/viper",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "BGm8lKZmvJbf/YOJLeL1rw2WVjA=",
+			"origin": "github.com/johnnyeven/libtools/vendor/golang.org/x/crypto/ssh/terminal",
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "lbGJo9921V8+yOZYRqGUQ8IyQjc=",
+			"origin": "github.com/johnnyeven/libtools/vendor/golang.org/x/sys/unix",
+			"path": "golang.org/x/sys/unix",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "Y7nctMxT58lRM78VtElPerhcnEs=",
+			"origin": "github.com/johnnyeven/libtools/vendor/golang.org/x/sys/windows",
+			"path": "golang.org/x/sys/windows",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "o3YChxWLvyCmkAn/ZNBj9HC9zKw=",
+			"origin": "github.com/johnnyeven/libtools/vendor/golang.org/x/text/transform",
+			"path": "golang.org/x/text/transform",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "vAScJLvb0ucuuclyN9vmJUyWTBA=",
+			"origin": "github.com/johnnyeven/libtools/vendor/golang.org/x/text/unicode/norm",
+			"path": "golang.org/x/text/unicode/norm",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "TM3Neoy1xRAKyZYMGzKc41sDFW4=",
+			"origin": "github.com/johnnyeven/libtools/vendor/gopkg.in/natefinch/lumberjack.v2",
+			"path": "gopkg.in/natefinch/lumberjack.v2",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "CzLpoHWYgSP+mT3bcW/jt8epp5I=",
+			"origin": "github.com/johnnyeven/libtools/vendor/gopkg.in/robfig/cron.v2",
+			"path": "gopkg.in/robfig/cron.v2",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		},
+		{
+			"checksumSHA1": "QqDq2x8XOU7IoOR98Cx1eiV5QY8=",
+			"origin": "github.com/johnnyeven/libtools/vendor/gopkg.in/yaml.v2",
+			"path": "gopkg.in/yaml.v2",
+			"revision": "52d0d5a29e6a8b8fc9d60fba5110e068ee65941d",
+			"revisionTime": "2019-04-16T08:19:56Z"
+		}
+	],
+	"rootPath": "github.com/in2store/service-in2-book"
+}
