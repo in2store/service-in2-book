@@ -26,7 +26,7 @@ func (bookMeta *BookMeta) T() *github_com_johnnyeven_libtools_sqlx_builder.Table
 }
 
 func (bookMeta *BookMeta) TableName() string {
-	return "t_book"
+	return "t_book_meta"
 }
 
 type BookMetaFields struct {
