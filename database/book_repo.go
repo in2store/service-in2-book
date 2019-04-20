@@ -6,12 +6,9 @@ import (
 
 //go:generate libtools gen model BookRepo --database DBIn2Book --table-name t_book_repo --with-comments
 // @def primary ID
-// @def unique_index U_book_repo_id BookRepoID
 // @def unique_index U_book_id BookID
 type BookRepo struct {
 	presets.PrimaryID
-	// 业务ID
-	BookRepoID uint64 `json:"bookRepoID,string" db:"F_book_repo_id" sql:"bigint(64) unsigned NOT NULL"`
 	// 书籍ID
 	BookID uint64 `json:"bookID,string" db:"F_book_id" sql:"bigint(64) unsigned NOT NULL"`
 	// 通道ID

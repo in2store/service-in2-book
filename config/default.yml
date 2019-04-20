@@ -1,4 +1,5 @@
 GOENV: DEV
+S_CLIENTID_HOST: service-id.profzone.service.profzone.net
 S_LOG_LEVEL: DEBUG
 S_MASTERDB_PASSWORD: "123456"
 S_MASTERDB_USER: root

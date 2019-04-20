@@ -30,7 +30,6 @@ func (bookRepo *BookRepo) TableName() string {
 
 type BookRepoFields struct {
 	ID             *github_com_johnnyeven_libtools_sqlx_builder.Column
-	BookRepoID     *github_com_johnnyeven_libtools_sqlx_builder.Column
 	BookID         *github_com_johnnyeven_libtools_sqlx_builder.Column
 	ChannelID      *github_com_johnnyeven_libtools_sqlx_builder.Column
 	EntryURL       *github_com_johnnyeven_libtools_sqlx_builder.Column
@@ -44,7 +43,6 @@ type BookRepoFields struct {
 
 var BookRepoField = struct {
 	ID             string
-	BookRepoID     string
 	BookID         string
 	ChannelID      string
 	EntryURL       string
@@ -56,7 +54,6 @@ var BookRepoField = struct {
 	Enabled        string
 }{
 	ID:             "ID",
-	BookRepoID:     "BookRepoID",
 	BookID:         "BookID",
 	ChannelID:      "ChannelID",
 	EntryURL:       "EntryURL",
@@ -73,7 +70,6 @@ func (bookRepo *BookRepo) Fields() *BookRepoFields {
 
 	return &BookRepoFields{
 		ID:             table.F(BookRepoField.ID),
-		BookRepoID:     table.F(BookRepoField.BookRepoID),
 		BookID:         table.F(BookRepoField.BookID),
 		ChannelID:      table.F(BookRepoField.ChannelID),
 		EntryURL:       table.F(BookRepoField.EntryURL),
@@ -87,7 +83,7 @@ func (bookRepo *BookRepo) Fields() *BookRepoFields {
 }
 
 func (bookRepo *BookRepo) IndexFieldNames() []string {
-	return []string{"BookID", "BookRepoID", "ID"}
+	return []string{"BookID", "ID"}
 }
 
 func (bookRepo *BookRepo) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_builder.Condition {
@@ -123,15 +119,11 @@ func (bookRepo *BookRepo) PrimaryKey() github_com_johnnyeven_libtools_sqlx.Field
 	return github_com_johnnyeven_libtools_sqlx.FieldNames{"ID"}
 }
 func (bookRepo *BookRepo) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
-	return github_com_johnnyeven_libtools_sqlx.Indexes{
-		"U_book_id":      github_com_johnnyeven_libtools_sqlx.FieldNames{"BookID", "Enabled"},
-		"U_book_repo_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"BookRepoID", "Enabled"},
-	}
+	return github_com_johnnyeven_libtools_sqlx.Indexes{"U_book_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"BookID", "Enabled"}}
 }
 func (bookRepo *BookRepo) Comments() map[string]string {
 	return map[string]string{
 		"BookID":         "书籍ID",
-		"BookRepoID":     "业务ID",
 		"ChannelID":      "通道ID",
 		"CreateTime":     "",
 		"Enabled":        "",
@@ -456,119 +448,6 @@ func (bookRepo *BookRepo) SoftDeleteByBookID(db *github_com_johnnyeven_libtools_
 	return nil
 }
 
-func (bookRepo *BookRepo) FetchByBookRepoID(db *github_com_johnnyeven_libtools_sqlx.DB) error {
-	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
-
-	table := bookRepo.T()
-	stmt := table.Select().
-		Comment("BookRepo.FetchByBookRepoID").
-		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
-			table.F("BookRepoID").Eq(bookRepo.BookRepoID),
-			table.F("Enabled").Eq(bookRepo.Enabled),
-		))
-
-	return db.Do(stmt).Scan(bookRepo).Err()
-}
-
-func (bookRepo *BookRepo) FetchByBookRepoIDForUpdate(db *github_com_johnnyeven_libtools_sqlx.DB) error {
-	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
-
-	table := bookRepo.T()
-	stmt := table.Select().
-		Comment("BookRepo.FetchByBookRepoIDForUpdate").
-		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
-			table.F("BookRepoID").Eq(bookRepo.BookRepoID),
-			table.F("Enabled").Eq(bookRepo.Enabled),
-		)).
-		ForUpdate()
-
-	return db.Do(stmt).Scan(bookRepo).Err()
-}
-
-func (bookRepo *BookRepo) DeleteByBookRepoID(db *github_com_johnnyeven_libtools_sqlx.DB) error {
-	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
-
-	table := bookRepo.T()
-	stmt := table.Delete().
-		Comment("BookRepo.DeleteByBookRepoID").
-		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
-			table.F("BookRepoID").Eq(bookRepo.BookRepoID),
-			table.F("Enabled").Eq(bookRepo.Enabled),
-		))
-
-	return db.Do(stmt).Scan(bookRepo).Err()
-}
-
-func (bookRepo *BookRepo) UpdateByBookRepoIDWithMap(db *github_com_johnnyeven_libtools_sqlx.DB, fieldValues github_com_johnnyeven_libtools_sqlx_builder.FieldValues) error {
-
-	if _, ok := fieldValues["UpdateTime"]; !ok {
-		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
-	}
-
-	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
-
-	table := bookRepo.T()
-
-	delete(fieldValues, "ID")
-
-	stmt := table.Update().
-		Comment("BookRepo.UpdateByBookRepoIDWithMap").
-		Set(table.AssignsByFieldValues(fieldValues)...).
-		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
-			table.F("BookRepoID").Eq(bookRepo.BookRepoID),
-			table.F("Enabled").Eq(bookRepo.Enabled),
-		))
-
-	dbRet := db.Do(stmt).Scan(bookRepo)
-	err := dbRet.Err()
-	if err != nil {
-		return err
-	}
-
-	rowsAffected, _ := dbRet.RowsAffected()
-	if rowsAffected == 0 {
-		return bookRepo.FetchByBookRepoID(db)
-	}
-	return nil
-}
-
-func (bookRepo *BookRepo) UpdateByBookRepoIDWithStruct(db *github_com_johnnyeven_libtools_sqlx.DB, zeroFields ...string) error {
-	fieldValues := github_com_johnnyeven_libtools_sqlx.FieldValuesFromStructByNonZero(bookRepo, zeroFields...)
-	return bookRepo.UpdateByBookRepoIDWithMap(db, fieldValues)
-}
-
-func (bookRepo *BookRepo) SoftDeleteByBookRepoID(db *github_com_johnnyeven_libtools_sqlx.DB) error {
-	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
-
-	table := bookRepo.T()
-
-	fieldValues := github_com_johnnyeven_libtools_sqlx_builder.FieldValues{}
-	fieldValues["Enabled"] = github_com_johnnyeven_libtools_courier_enumeration.BOOL__FALSE
-
-	if _, ok := fieldValues["UpdateTime"]; !ok {
-		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
-	}
-
-	stmt := table.Update().
-		Comment("BookRepo.SoftDeleteByBookRepoID").
-		Set(table.AssignsByFieldValues(fieldValues)...).
-		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
-			table.F("BookRepoID").Eq(bookRepo.BookRepoID),
-			table.F("Enabled").Eq(bookRepo.Enabled),
-		))
-
-	dbRet := db.Do(stmt).Scan(bookRepo)
-	err := dbRet.Err()
-	if err != nil {
-		dbErr := github_com_johnnyeven_libtools_sqlx.DBErr(err)
-		if dbErr.IsConflict() {
-			return bookRepo.DeleteByBookRepoID(db)
-		}
-		return err
-	}
-	return nil
-}
-
 type BookRepoList []BookRepo
 
 // deprecated
@@ -658,32 +537,6 @@ func (bookRepo *BookRepo) BatchFetchByBookIDList(db *github_com_johnnyeven_libto
 
 	stmt := table.Select().
 		Comment("BookRepo.BatchFetchByBookIDList").
-		Where(condition)
-
-	err = db.Do(stmt).Scan(&bookRepoList).Err()
-
-	return
-}
-
-// deprecated
-func (bookRepoList *BookRepoList) BatchFetchByBookRepoIDList(db *github_com_johnnyeven_libtools_sqlx.DB, bookRepoIDList []uint64) (err error) {
-	*bookRepoList, err = (&BookRepo{}).BatchFetchByBookRepoIDList(db, bookRepoIDList)
-	return
-}
-
-func (bookRepo *BookRepo) BatchFetchByBookRepoIDList(db *github_com_johnnyeven_libtools_sqlx.DB, bookRepoIDList []uint64) (bookRepoList BookRepoList, err error) {
-	if len(bookRepoIDList) == 0 {
-		return BookRepoList{}, nil
-	}
-
-	table := bookRepo.T()
-
-	condition := table.F("BookRepoID").In(bookRepoIDList)
-
-	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
-
-	stmt := table.Select().
-		Comment("BookRepo.BatchFetchByBookRepoIDList").
 		Where(condition)
 
 	err = db.Do(stmt).Scan(&bookRepoList).Err()
