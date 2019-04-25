@@ -57,9 +57,9 @@ func GetBookMetaByBookID(bookID uint64, db *sqlx.DB, withLock bool) (meta *datab
 
 type GetBooksMetaRequest struct {
 	// 用户ID
-	UserID uint64 `name:"userID,string" json:"userID,string" in:"query"`
+	UserID uint64 `name:"userID,string" json:"userID,string" in:"query" default:""`
 	// 状态
-	Status types.BookStatus `name:"status" json:"status" in:"query"`
+	Status types.BookStatus `name:"status" json:"status" in:"query" default:""`
 }
 
 func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (result database.BookMetaList, count int32, err error) {
