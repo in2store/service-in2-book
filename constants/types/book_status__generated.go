@@ -12,10 +12,8 @@ var InvalidBookStatus = errors.New("invalid BookStatus")
 
 func init() {
 	github_com_johnnyeven_libtools_courier_enumeration.RegisterEnums("BookStatus", map[string]string{
-		"NORMAL":   "正常展示",
-		"PENGDING": "等待导入",
-		"PROCESS":  "导入中",
-		"READY":    "就绪",
+		"NORMAL": "正常展示",
+		"READY":  "就绪",
 	})
 }
 
@@ -25,10 +23,6 @@ func ParseBookStatusFromString(s string) (BookStatus, error) {
 		return BOOK_STATUS_UNKNOWN, nil
 	case "NORMAL":
 		return BOOK_STATUS__NORMAL, nil
-	case "PENGDING":
-		return BOOK_STATUS__PENGDING, nil
-	case "PROCESS":
-		return BOOK_STATUS__PROCESS, nil
 	case "READY":
 		return BOOK_STATUS__READY, nil
 	}
@@ -41,10 +35,6 @@ func ParseBookStatusFromLabelString(s string) (BookStatus, error) {
 		return BOOK_STATUS_UNKNOWN, nil
 	case "正常展示":
 		return BOOK_STATUS__NORMAL, nil
-	case "等待导入":
-		return BOOK_STATUS__PENGDING, nil
-	case "导入中":
-		return BOOK_STATUS__PROCESS, nil
 	case "就绪":
 		return BOOK_STATUS__READY, nil
 	}
@@ -57,10 +47,8 @@ func (BookStatus) EnumType() string {
 
 func (BookStatus) Enums() map[int][]string {
 	return map[int][]string{
-		int(BOOK_STATUS__NORMAL):   {"NORMAL", "正常展示"},
-		int(BOOK_STATUS__PENGDING): {"PENGDING", "等待导入"},
-		int(BOOK_STATUS__PROCESS):  {"PROCESS", "导入中"},
-		int(BOOK_STATUS__READY):    {"READY", "就绪"},
+		int(BOOK_STATUS__NORMAL): {"NORMAL", "正常展示"},
+		int(BOOK_STATUS__READY):  {"READY", "就绪"},
 	}
 }
 func (v BookStatus) String() string {
@@ -69,10 +57,6 @@ func (v BookStatus) String() string {
 		return ""
 	case BOOK_STATUS__NORMAL:
 		return "NORMAL"
-	case BOOK_STATUS__PENGDING:
-		return "PENGDING"
-	case BOOK_STATUS__PROCESS:
-		return "PROCESS"
 	case BOOK_STATUS__READY:
 		return "READY"
 	}
@@ -85,10 +69,6 @@ func (v BookStatus) Label() string {
 		return ""
 	case BOOK_STATUS__NORMAL:
 		return "正常展示"
-	case BOOK_STATUS__PENGDING:
-		return "等待导入"
-	case BOOK_STATUS__PROCESS:
-		return "导入中"
 	case BOOK_STATUS__READY:
 		return "就绪"
 	}

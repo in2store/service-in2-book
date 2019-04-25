@@ -4,6 +4,7 @@ import (
 	"github.com/in2store/service-in2-book/constants/types"
 	"github.com/in2store/service-in2-book/database"
 	"github.com/johnnyeven/libtools/sqlx"
+	"github.com/johnnyeven/libtools/sqlx/builder"
 )
 
 type CreateBookMetaParams struct {
@@ -25,7 +26,7 @@ func CreateBookMeta(bookID uint64, req CreateBookMetaParams, db *sqlx.DB) (meta 
 	meta = &database.BookMeta{
 		BookID:       bookID,
 		UserID:       req.UserID,
-		Status:       types.BOOK_STATUS__PENGDING,
+		Status:       types.BOOK_STATUS__READY,
 		Title:        req.Title,
 		CoverKey:     req.CoverKey,
 		Comment:      req.Comment,
@@ -52,4 +53,26 @@ func GetBookMetaByBookID(bookID uint64, db *sqlx.DB, withLock bool) (meta *datab
 		return nil, err
 	}
 	return meta, nil
+}
+
+type GetBooksMetaRequest struct {
+	// 用户ID
+	UserID uint64 `name:"userID,string" json:"userID,string" in:"query"`
+	// 状态
+	Status types.BookStatus `name:"status" json:"status" in:"query"`
+}
+
+func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (result database.BookMetaList, count int32, err error) {
+	meta := &database.BookMeta{}
+	table := meta.T()
+	var conditions *builder.Condition
+
+	if req.UserID != 0 {
+		conditions = builder.And(conditions, table.F("UserID").Eq(req.UserID))
+	}
+	if req.Status != types.BOOK_STATUS_UNKNOWN {
+		conditions = builder.And(conditions, table.F("Status").Eq(req.Status))
+	}
+
+	return meta.FetchList(db, size, offset, conditions)
 }

@@ -11,7 +11,7 @@ services:
       project.group: ${PROJECT_GROUP}
       project.name: ${PROJECT_NAME}
       project.version: ${PROJECT_VERSION}
-      upstreams: in2-book.db-routers.rancher.internal,in2-book-readonly.db-routers.rancher.internal
+      upstreams: ${S_CLIENTID_HOST},in2-book.db-routers.rancher.internal,in2-book-readonly.db-routers.rancher.internal
     environment:
       GOENV: ${GOENV}
       S_CLIENTID_HOST: ${S_CLIENTID_HOST}
