@@ -7,6 +7,7 @@ import (
 //go:generate libtools gen model BookRepo --database DBIn2Book --table-name t_book_repo --with-comments
 // @def primary ID
 // @def unique_index U_book_id BookID
+// @def unique_index U_channel_repo_name ChannelID RepoFullName
 type BookRepo struct {
 	presets.PrimaryID
 	// 书籍ID

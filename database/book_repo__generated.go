@@ -83,7 +83,7 @@ func (bookRepo *BookRepo) Fields() *BookRepoFields {
 }
 
 func (bookRepo *BookRepo) IndexFieldNames() []string {
-	return []string{"BookID", "ID"}
+	return []string{"BookID", "ChannelID", "ID", "RepoFullName"}
 }
 
 func (bookRepo *BookRepo) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_builder.Condition {
@@ -119,7 +119,10 @@ func (bookRepo *BookRepo) PrimaryKey() github_com_johnnyeven_libtools_sqlx.Field
 	return github_com_johnnyeven_libtools_sqlx.FieldNames{"ID"}
 }
 func (bookRepo *BookRepo) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
-	return github_com_johnnyeven_libtools_sqlx.Indexes{"U_book_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"BookID", "Enabled"}}
+	return github_com_johnnyeven_libtools_sqlx.Indexes{
+		"U_book_id":           github_com_johnnyeven_libtools_sqlx.FieldNames{"BookID", "Enabled"},
+		"U_channel_repo_name": github_com_johnnyeven_libtools_sqlx.FieldNames{"ChannelID", "RepoFullName", "Enabled"},
+	}
 }
 func (bookRepo *BookRepo) Comments() map[string]string {
 	return map[string]string{
@@ -448,6 +451,124 @@ func (bookRepo *BookRepo) SoftDeleteByBookID(db *github_com_johnnyeven_libtools_
 	return nil
 }
 
+func (bookRepo *BookRepo) FetchByChannelIDAndRepoFullName(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := bookRepo.T()
+	stmt := table.Select().
+		Comment("BookRepo.FetchByChannelIDAndRepoFullName").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("ChannelID").Eq(bookRepo.ChannelID),
+			table.F("RepoFullName").Eq(bookRepo.RepoFullName),
+			table.F("Enabled").Eq(bookRepo.Enabled),
+		))
+
+	return db.Do(stmt).Scan(bookRepo).Err()
+}
+
+func (bookRepo *BookRepo) FetchByChannelIDAndRepoFullNameForUpdate(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := bookRepo.T()
+	stmt := table.Select().
+		Comment("BookRepo.FetchByChannelIDAndRepoFullNameForUpdate").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("ChannelID").Eq(bookRepo.ChannelID),
+			table.F("RepoFullName").Eq(bookRepo.RepoFullName),
+			table.F("Enabled").Eq(bookRepo.Enabled),
+		)).
+		ForUpdate()
+
+	return db.Do(stmt).Scan(bookRepo).Err()
+}
+
+func (bookRepo *BookRepo) DeleteByChannelIDAndRepoFullName(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := bookRepo.T()
+	stmt := table.Delete().
+		Comment("BookRepo.DeleteByChannelIDAndRepoFullName").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("ChannelID").Eq(bookRepo.ChannelID),
+			table.F("RepoFullName").Eq(bookRepo.RepoFullName),
+			table.F("Enabled").Eq(bookRepo.Enabled),
+		))
+
+	return db.Do(stmt).Scan(bookRepo).Err()
+}
+
+func (bookRepo *BookRepo) UpdateByChannelIDAndRepoFullNameWithMap(db *github_com_johnnyeven_libtools_sqlx.DB, fieldValues github_com_johnnyeven_libtools_sqlx_builder.FieldValues) error {
+
+	if _, ok := fieldValues["UpdateTime"]; !ok {
+		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
+	}
+
+	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := bookRepo.T()
+
+	delete(fieldValues, "ID")
+
+	stmt := table.Update().
+		Comment("BookRepo.UpdateByChannelIDAndRepoFullNameWithMap").
+		Set(table.AssignsByFieldValues(fieldValues)...).
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("ChannelID").Eq(bookRepo.ChannelID),
+			table.F("RepoFullName").Eq(bookRepo.RepoFullName),
+			table.F("Enabled").Eq(bookRepo.Enabled),
+		))
+
+	dbRet := db.Do(stmt).Scan(bookRepo)
+	err := dbRet.Err()
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, _ := dbRet.RowsAffected()
+	if rowsAffected == 0 {
+		return bookRepo.FetchByChannelIDAndRepoFullName(db)
+	}
+	return nil
+}
+
+func (bookRepo *BookRepo) UpdateByChannelIDAndRepoFullNameWithStruct(db *github_com_johnnyeven_libtools_sqlx.DB, zeroFields ...string) error {
+	fieldValues := github_com_johnnyeven_libtools_sqlx.FieldValuesFromStructByNonZero(bookRepo, zeroFields...)
+	return bookRepo.UpdateByChannelIDAndRepoFullNameWithMap(db, fieldValues)
+}
+
+func (bookRepo *BookRepo) SoftDeleteByChannelIDAndRepoFullName(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	bookRepo.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := bookRepo.T()
+
+	fieldValues := github_com_johnnyeven_libtools_sqlx_builder.FieldValues{}
+	fieldValues["Enabled"] = github_com_johnnyeven_libtools_courier_enumeration.BOOL__FALSE
+
+	if _, ok := fieldValues["UpdateTime"]; !ok {
+		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
+	}
+
+	stmt := table.Update().
+		Comment("BookRepo.SoftDeleteByChannelIDAndRepoFullName").
+		Set(table.AssignsByFieldValues(fieldValues)...).
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("ChannelID").Eq(bookRepo.ChannelID),
+			table.F("RepoFullName").Eq(bookRepo.RepoFullName),
+			table.F("Enabled").Eq(bookRepo.Enabled),
+		))
+
+	dbRet := db.Do(stmt).Scan(bookRepo)
+	err := dbRet.Err()
+	if err != nil {
+		dbErr := github_com_johnnyeven_libtools_sqlx.DBErr(err)
+		if dbErr.IsConflict() {
+			return bookRepo.DeleteByChannelIDAndRepoFullName(db)
+		}
+		return err
+	}
+	return nil
+}
+
 type BookRepoList []BookRepo
 
 // deprecated
@@ -545,6 +666,32 @@ func (bookRepo *BookRepo) BatchFetchByBookIDList(db *github_com_johnnyeven_libto
 }
 
 // deprecated
+func (bookRepoList *BookRepoList) BatchFetchByChannelIDList(db *github_com_johnnyeven_libtools_sqlx.DB, channelIDList []uint64) (err error) {
+	*bookRepoList, err = (&BookRepo{}).BatchFetchByChannelIDList(db, channelIDList)
+	return
+}
+
+func (bookRepo *BookRepo) BatchFetchByChannelIDList(db *github_com_johnnyeven_libtools_sqlx.DB, channelIDList []uint64) (bookRepoList BookRepoList, err error) {
+	if len(channelIDList) == 0 {
+		return BookRepoList{}, nil
+	}
+
+	table := bookRepo.T()
+
+	condition := table.F("ChannelID").In(channelIDList)
+
+	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
+
+	stmt := table.Select().
+		Comment("BookRepo.BatchFetchByChannelIDList").
+		Where(condition)
+
+	err = db.Do(stmt).Scan(&bookRepoList).Err()
+
+	return
+}
+
+// deprecated
 func (bookRepoList *BookRepoList) BatchFetchByIDList(db *github_com_johnnyeven_libtools_sqlx.DB, idList []uint64) (err error) {
 	*bookRepoList, err = (&BookRepo{}).BatchFetchByIDList(db, idList)
 	return
@@ -563,6 +710,32 @@ func (bookRepo *BookRepo) BatchFetchByIDList(db *github_com_johnnyeven_libtools_
 
 	stmt := table.Select().
 		Comment("BookRepo.BatchFetchByIDList").
+		Where(condition)
+
+	err = db.Do(stmt).Scan(&bookRepoList).Err()
+
+	return
+}
+
+// deprecated
+func (bookRepoList *BookRepoList) BatchFetchByRepoFullNameList(db *github_com_johnnyeven_libtools_sqlx.DB, repoFullNameList []string) (err error) {
+	*bookRepoList, err = (&BookRepo{}).BatchFetchByRepoFullNameList(db, repoFullNameList)
+	return
+}
+
+func (bookRepo *BookRepo) BatchFetchByRepoFullNameList(db *github_com_johnnyeven_libtools_sqlx.DB, repoFullNameList []string) (bookRepoList BookRepoList, err error) {
+	if len(repoFullNameList) == 0 {
+		return BookRepoList{}, nil
+	}
+
+	table := bookRepo.T()
+
+	condition := table.F("RepoFullName").In(repoFullNameList)
+
+	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
+
+	stmt := table.Select().
+		Comment("BookRepo.BatchFetchByRepoFullNameList").
 		Where(condition)
 
 	err = db.Do(stmt).Scan(&bookRepoList).Err()
