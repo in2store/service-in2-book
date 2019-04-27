@@ -20,6 +20,14 @@ func (req GetCodeLanguage) Path() string {
 	return "/code-language"
 }
 
-func (req GetCodeLanguage) Output(ctx context.Context) (result interface{}, err error) {
-	return types.CodeLanguage(0).Enums(), nil
+func (req GetCodeLanguage) Output(ctx context.Context) (interface{}, error) {
+	enums := types.CodeLanguage(0).Enums()
+	data := make([]MetaItem, 0)
+	for _, e := range enums {
+		data = append(data, MetaItem{
+			Value: e[0],
+			Label: e[1],
+		})
+	}
+	return data, nil
 }

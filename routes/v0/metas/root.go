@@ -11,3 +11,8 @@ type MetasGroup struct {
 func (MetasGroup) Path() string {
 	return "/metas"
 }
+
+type MetaItem struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
