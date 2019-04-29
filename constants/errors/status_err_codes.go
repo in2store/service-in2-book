@@ -7,7 +7,7 @@ import (
 )
 
 //go:generate libtools gen error
-const ServiceStatusErrorCode = 0 * 1e3 // todo rename this
+const ServiceStatusErrorCode = 99 * 1e3 // todo rename this
 
 const (
 	// 请求参数错误
@@ -17,6 +17,8 @@ const (
 const (
 	// 未找到
 	NotFound status_error.StatusErrorCode = http.StatusNotFound*1e6 + ServiceStatusErrorCode + iota
+	// @errTalk 分类标识未找到
+	CategoryKeyNotFound
 )
 
 const (
@@ -27,6 +29,8 @@ const (
 const (
 	// @errTalk 操作冲突
 	Conflict status_error.StatusErrorCode = http.StatusConflict*1e6 + ServiceStatusErrorCode + iota
+	// @errTalk 分类标识已存在
+	CategoryKeyConflict
 )
 
 const (

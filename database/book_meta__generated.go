@@ -32,6 +32,7 @@ func (bookMeta *BookMeta) TableName() string {
 type BookMetaFields struct {
 	ID           *github_com_johnnyeven_libtools_sqlx_builder.Column
 	BookID       *github_com_johnnyeven_libtools_sqlx_builder.Column
+	CategoryKey  *github_com_johnnyeven_libtools_sqlx_builder.Column
 	UserID       *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Status       *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Title        *github_com_johnnyeven_libtools_sqlx_builder.Column
@@ -47,6 +48,7 @@ type BookMetaFields struct {
 var BookMetaField = struct {
 	ID           string
 	BookID       string
+	CategoryKey  string
 	UserID       string
 	Status       string
 	Title        string
@@ -60,6 +62,7 @@ var BookMetaField = struct {
 }{
 	ID:           "ID",
 	BookID:       "BookID",
+	CategoryKey:  "CategoryKey",
 	UserID:       "UserID",
 	Status:       "Status",
 	Title:        "Title",
@@ -78,6 +81,7 @@ func (bookMeta *BookMeta) Fields() *BookMetaFields {
 	return &BookMetaFields{
 		ID:           table.F(BookMetaField.ID),
 		BookID:       table.F(BookMetaField.BookID),
+		CategoryKey:  table.F(BookMetaField.CategoryKey),
 		UserID:       table.F(BookMetaField.UserID),
 		Status:       table.F(BookMetaField.Status),
 		Title:        table.F(BookMetaField.Title),
@@ -92,7 +96,7 @@ func (bookMeta *BookMeta) Fields() *BookMetaFields {
 }
 
 func (bookMeta *BookMeta) IndexFieldNames() []string {
-	return []string{"BookID", "ID", "Status", "UserID"}
+	return []string{"BookID", "CategoryKey", "ID", "Status", "UserID"}
 }
 
 func (bookMeta *BookMeta) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_builder.Condition {
@@ -128,7 +132,10 @@ func (bookMeta *BookMeta) PrimaryKey() github_com_johnnyeven_libtools_sqlx.Field
 	return github_com_johnnyeven_libtools_sqlx.FieldNames{"ID"}
 }
 func (bookMeta *BookMeta) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
-	return github_com_johnnyeven_libtools_sqlx.Indexes{"I_author_status": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "Status"}}
+	return github_com_johnnyeven_libtools_sqlx.Indexes{
+		"I_author_status": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "Status"},
+		"I_category":      github_com_johnnyeven_libtools_sqlx.FieldNames{"CategoryKey", "Status"},
+	}
 }
 func (bookMeta *BookMeta) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{"U_book_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"BookID", "Enabled"}}
@@ -137,6 +144,7 @@ func (bookMeta *BookMeta) Comments() map[string]string {
 	return map[string]string{
 		"BookID":       "业务ID",
 		"BookLanguage": "文档语言",
+		"CategoryKey":  "类别ID",
 		"CodeLanguage": "代码语言",
 		"Comment":      "简介",
 		"CoverKey":     "封面图片key",
@@ -551,6 +559,32 @@ func (bookMeta *BookMeta) BatchFetchByBookIDList(db *github_com_johnnyeven_libto
 
 	stmt := table.Select().
 		Comment("BookMeta.BatchFetchByBookIDList").
+		Where(condition)
+
+	err = db.Do(stmt).Scan(&bookMetaList).Err()
+
+	return
+}
+
+// deprecated
+func (bookMetaList *BookMetaList) BatchFetchByCategoryKeyList(db *github_com_johnnyeven_libtools_sqlx.DB, categoryKeyList []string) (err error) {
+	*bookMetaList, err = (&BookMeta{}).BatchFetchByCategoryKeyList(db, categoryKeyList)
+	return
+}
+
+func (bookMeta *BookMeta) BatchFetchByCategoryKeyList(db *github_com_johnnyeven_libtools_sqlx.DB, categoryKeyList []string) (bookMetaList BookMetaList, err error) {
+	if len(categoryKeyList) == 0 {
+		return BookMetaList{}, nil
+	}
+
+	table := bookMeta.T()
+
+	condition := table.F("CategoryKey").In(categoryKeyList)
+
+	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
+
+	stmt := table.Select().
+		Comment("BookMeta.BatchFetchByCategoryKeyList").
 		Where(condition)
 
 	err = db.Do(stmt).Scan(&bookMetaList).Err()
