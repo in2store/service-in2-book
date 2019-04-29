@@ -1,6 +1,7 @@
 package modules
 
 import (
+	"github.com/in2store/service-in2-book/constants/errors"
 	"github.com/in2store/service-in2-book/constants/types"
 	"github.com/in2store/service-in2-book/database"
 	"github.com/johnnyeven/libtools/sqlx"
@@ -75,4 +76,19 @@ func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (res
 	}
 
 	return meta.FetchList(db, size, offset, conditions)
+}
+
+func SetBookCategory(bookID uint64, categoryKey string, db *sqlx.DB) error {
+	bookCategory := &database.BookCategory{
+		CategoryKey: categoryKey,
+		BookID:      bookID,
+	}
+	err := bookCategory.Create(db)
+	if err != nil {
+		if sqlx.DBErr(err).IsConflict() {
+			return errors.BookCategoryConflict
+		}
+		return err
+	}
+	return nil
 }

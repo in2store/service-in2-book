@@ -31,6 +31,8 @@ const (
 	Conflict status_error.StatusErrorCode = http.StatusConflict*1e6 + ServiceStatusErrorCode + iota
 	// @errTalk 分类标识已存在
 	CategoryKeyConflict
+	// @errTalk 文档已在分类中
+	BookCategoryConflict
 )
 
 const (
