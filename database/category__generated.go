@@ -79,7 +79,7 @@ func (category *Category) Fields() *CategoryFields {
 }
 
 func (category *Category) IndexFieldNames() []string {
-	return []string{"CategoryKey", "ID"}
+	return []string{"CategoryKey", "ID", "Reserved"}
 }
 
 func (category *Category) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_builder.Condition {
@@ -113,6 +113,9 @@ func (category *Category) ConditionByStruct() *github_com_johnnyeven_libtools_sq
 
 func (category *Category) PrimaryKey() github_com_johnnyeven_libtools_sqlx.FieldNames {
 	return github_com_johnnyeven_libtools_sqlx.FieldNames{"ID"}
+}
+func (category *Category) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
+	return github_com_johnnyeven_libtools_sqlx.Indexes{"I_reserved": github_com_johnnyeven_libtools_sqlx.FieldNames{"Reserved"}}
 }
 func (category *Category) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{"U_category": github_com_johnnyeven_libtools_sqlx.FieldNames{"CategoryKey", "Enabled"}}
@@ -558,6 +561,32 @@ func (category *Category) BatchFetchByIDList(db *github_com_johnnyeven_libtools_
 
 	stmt := table.Select().
 		Comment("Category.BatchFetchByIDList").
+		Where(condition)
+
+	err = db.Do(stmt).Scan(&categoryList).Err()
+
+	return
+}
+
+// deprecated
+func (categoryList *CategoryList) BatchFetchByReservedList(db *github_com_johnnyeven_libtools_sqlx.DB, reservedList []github_com_johnnyeven_libtools_courier_enumeration.Bool) (err error) {
+	*categoryList, err = (&Category{}).BatchFetchByReservedList(db, reservedList)
+	return
+}
+
+func (category *Category) BatchFetchByReservedList(db *github_com_johnnyeven_libtools_sqlx.DB, reservedList []github_com_johnnyeven_libtools_courier_enumeration.Bool) (categoryList CategoryList, err error) {
+	if len(reservedList) == 0 {
+		return CategoryList{}, nil
+	}
+
+	table := category.T()
+
+	condition := table.F("Reserved").In(reservedList)
+
+	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
+
+	stmt := table.Select().
+		Comment("Category.BatchFetchByReservedList").
 		Where(condition)
 
 	err = db.Do(stmt).Scan(&categoryList).Err()

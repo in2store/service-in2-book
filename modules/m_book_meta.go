@@ -79,11 +79,21 @@ func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (res
 }
 
 func SetBookCategory(bookID uint64, categoryKey string, db *sqlx.DB) error {
+	category := &database.Category{
+		CategoryKey: categoryKey,
+	}
+	err := category.FetchByCategoryKey(db)
+	if err != nil {
+		if sqlx.DBErr(err).IsNotFound() {
+			return errors.CategoryKeyNotFound
+		}
+		return err
+	}
 	bookCategory := &database.BookCategory{
 		CategoryKey: categoryKey,
 		BookID:      bookID,
 	}
-	err := bookCategory.Create(db)
+	err = bookCategory.Create(db)
 	if err != nil {
 		if sqlx.DBErr(err).IsConflict() {
 			return errors.BookCategoryConflict
