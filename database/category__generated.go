@@ -34,6 +34,7 @@ type CategoryFields struct {
 	Name          *github_com_johnnyeven_libtools_sqlx_builder.Column
 	IconClassName *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Sort          *github_com_johnnyeven_libtools_sqlx_builder.Column
+	Reserved      *github_com_johnnyeven_libtools_sqlx_builder.Column
 	CreateTime    *github_com_johnnyeven_libtools_sqlx_builder.Column
 	UpdateTime    *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Enabled       *github_com_johnnyeven_libtools_sqlx_builder.Column
@@ -45,6 +46,7 @@ var CategoryField = struct {
 	Name          string
 	IconClassName string
 	Sort          string
+	Reserved      string
 	CreateTime    string
 	UpdateTime    string
 	Enabled       string
@@ -54,6 +56,7 @@ var CategoryField = struct {
 	Name:          "Name",
 	IconClassName: "IconClassName",
 	Sort:          "Sort",
+	Reserved:      "Reserved",
 	CreateTime:    "CreateTime",
 	UpdateTime:    "UpdateTime",
 	Enabled:       "Enabled",
@@ -68,6 +71,7 @@ func (category *Category) Fields() *CategoryFields {
 		Name:          table.F(CategoryField.Name),
 		IconClassName: table.F(CategoryField.IconClassName),
 		Sort:          table.F(CategoryField.Sort),
+		Reserved:      table.F(CategoryField.Reserved),
 		CreateTime:    table.F(CategoryField.CreateTime),
 		UpdateTime:    table.F(CategoryField.UpdateTime),
 		Enabled:       table.F(CategoryField.Enabled),
@@ -121,6 +125,7 @@ func (category *Category) Comments() map[string]string {
 		"ID":            "",
 		"IconClassName": "图标类名",
 		"Name":          "分类名",
+		"Reserved":      "是否保留为系统预设",
 		"Sort":          "排序",
 		"UpdateTime":    "",
 	}

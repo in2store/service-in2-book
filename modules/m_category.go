@@ -3,6 +3,7 @@ package modules
 import (
 	"github.com/in2store/service-in2-book/constants/errors"
 	"github.com/in2store/service-in2-book/database"
+	"github.com/johnnyeven/libtools/courier/enumeration"
 	"github.com/johnnyeven/libtools/sqlx"
 	"github.com/johnnyeven/libtools/sqlx/builder"
 )
@@ -16,6 +17,8 @@ type CreateCategoryBody struct {
 	IconClassName string `json:"iconClassName"`
 	// 排序
 	Sort int32 `json:"sort" default:"0"`
+	// 是否保留为系统预设
+	Reserved enumeration.Bool `json:"reserved" default:"1"`
 }
 
 func CreateCategory(req CreateCategoryBody, db *sqlx.DB) (result *database.Category, err error) {
@@ -24,6 +27,7 @@ func CreateCategory(req CreateCategoryBody, db *sqlx.DB) (result *database.Categ
 		Name:          req.Name,
 		IconClassName: req.IconClassName,
 		Sort:          req.Sort,
+		Reserved:      req.Reserved,
 	}
 	err = result.Create(db)
 	if err != nil {
@@ -41,7 +45,9 @@ type UpdateCategoryBody struct {
 	// 图标类名
 	IconClassName string `json:"iconClassName"`
 	// 排序
-	Sort int32 `json:"sort" default:"1"`
+	Sort int32 `json:"sort" default:"0"`
+	// 是否保留为系统预设
+	Reserved enumeration.Bool `json:"reserved" default:"0"`
 }
 
 func UpdateCategory(categoryKey string, req UpdateCategoryBody, db *sqlx.DB, withLock bool) error {
@@ -64,6 +70,7 @@ func UpdateCategory(categoryKey string, req UpdateCategoryBody, db *sqlx.DB, wit
 	c.IconClassName = req.IconClassName
 	c.Sort = req.Sort
 	c.Name = req.Name
+	c.Reserved = req.Reserved
 	err = c.UpdateByCategoryKeyWithStruct(db)
 	if err != nil {
 		return err

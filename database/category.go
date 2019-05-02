@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/johnnyeven/libtools/courier/enumeration"
 	"github.com/johnnyeven/libtools/sqlx/presets"
 )
 
@@ -16,7 +17,9 @@ type Category struct {
 	// 图标类名
 	IconClassName string `json:"iconClassName" db:"F_icon_class_name" sql:"varchar(32) DEFAULT NULL"`
 	// 排序
-	Sort int32 `json:"-" db:"F_sort" sql:"int DEFAULT '0'"`
+	Sort int32 `json:"sort" db:"F_sort" sql:"int DEFAULT '0'"`
+	// 是否保留为系统预设
+	Reserved enumeration.Bool `json:"reserved" db:"F_reserved" sql:"tinyint(4) DEFAULT '1'"`
 
 	presets.OperateTime
 	presets.SoftDelete
