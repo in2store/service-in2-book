@@ -8,6 +8,7 @@ import (
 //go:generate libtools gen model Category --database DBIn2Book --table-name t_category --with-comments
 // @def primary ID
 // @def unique_index U_category CategoryKey
+// @def index I_reserved Reserved
 type Category struct {
 	presets.PrimaryID
 	// 业务ID
@@ -19,7 +20,7 @@ type Category struct {
 	// 排序
 	Sort int32 `json:"sort" db:"F_sort" sql:"int DEFAULT '0'"`
 	// 是否保留为系统预设
-	Reserved enumeration.Bool `json:"reserved" db:"F_reserved" sql:"tinyint(4) DEFAULT '1'"`
+	Reserved enumeration.Bool `json:"reserved" db:"F_reserved" sql:"tinyint(4) DEFAULT '0'"`
 
 	presets.OperateTime
 	presets.SoftDelete

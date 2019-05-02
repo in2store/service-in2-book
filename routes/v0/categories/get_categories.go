@@ -6,6 +6,7 @@ import (
 	"github.com/in2store/service-in2-book/global"
 	"github.com/in2store/service-in2-book/modules"
 	"github.com/johnnyeven/libtools/courier"
+	"github.com/johnnyeven/libtools/courier/enumeration"
 	"github.com/johnnyeven/libtools/courier/httpx"
 	"github.com/johnnyeven/libtools/httplib"
 	"github.com/sirupsen/logrus"
@@ -18,6 +19,8 @@ func init() {
 // 获取分类列表
 type GetCategories struct {
 	httpx.MethodGet
+	// 是否仅获取非保留分类
+	FilterReserved enumeration.Bool `name:"filterReserved" in:"query" default:"TRUE"`
 	httplib.Pager
 }
 
@@ -32,7 +35,11 @@ type GetCategoriesResult struct {
 
 func (req GetCategories) Output(ctx context.Context) (result interface{}, err error) {
 	db := global.Config.SlaveDB.Get()
-	resp, count, err := modules.GetCategoriesSortAsc(req.Size, req.Offset, db)
+	var filterReserved = false
+	if req.FilterReserved.True() {
+		filterReserved = true
+	}
+	resp, count, err := modules.GetCategoriesSortAsc(filterReserved, req.Size, req.Offset, db)
 	if err != nil {
 		logrus.Errorf("[GetCategories] modules.GetCategoriesSortAsc err: %v", err)
 		return nil, err

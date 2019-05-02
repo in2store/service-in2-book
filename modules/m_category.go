@@ -78,7 +78,7 @@ func UpdateCategory(categoryKey string, req UpdateCategoryBody, db *sqlx.DB, wit
 	return nil
 }
 
-func GetCategoriesSortAsc(size, offset int32, db *sqlx.DB) (result database.CategoryList, count int32, err error) {
+func GetCategoriesSortAsc(filterReserved bool, size, offset int32, db *sqlx.DB) (result database.CategoryList, count int32, err error) {
 	c := &database.Category{}
 	table := c.T()
 	stmt := table.
@@ -87,6 +87,10 @@ func GetCategoriesSortAsc(size, offset int32, db *sqlx.DB) (result database.Cate
 		OrderAscBy(table.F("Sort")).
 		Limit(size).
 		Offset(offset)
+
+	if filterReserved {
+		stmt = stmt.Where(table.F("Reserved").Eq(enumeration.BOOL__FALSE))
+	}
 
 	errForCount := db.Do(stmt.For(builder.Count(builder.Star()))).Scan(&count).Err()
 	if errForCount != nil {
