@@ -18,7 +18,7 @@ type CreateCategoryBody struct {
 	// 排序
 	Sort int32 `json:"sort" default:"0"`
 	// 是否保留为系统预设
-	Reserved enumeration.Bool `json:"reserved" default:"1"`
+	Reserved enumeration.Bool `json:"reserved" default:"0"`
 }
 
 func CreateCategory(req CreateCategoryBody, db *sqlx.DB) (result *database.Category, err error) {
