@@ -137,7 +137,7 @@ func (bookMeta *BookMeta) PrimaryKey() github_com_johnnyeven_libtools_sqlx.Field
 }
 func (bookMeta *BookMeta) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{
-		"I_author_status": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "Status"},
+		"I_author_status": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "CategoryKey", "Status"},
 		"I_category":      github_com_johnnyeven_libtools_sqlx.FieldNames{"CategoryKey", "Status", "Selected"},
 	}
 }

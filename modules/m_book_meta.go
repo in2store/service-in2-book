@@ -118,6 +118,9 @@ type GetBooksMetaRequest struct {
 	// 状态
 	Status types.BookStatus `name:"status" json:"status" in:"query" default:""`
 	// 分类
+	CategoryKey string `name:"categoryKey" json:"categoryKey" in:"query" default:""`
+	// 是否精选
+	Selected enumeration.Bool `name:"selected" json:"selected" in:"query" default:""`
 }
 
 func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (result database.BookMetaList, count int32, err error) {
@@ -128,8 +131,14 @@ func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (res
 	if req.UserID != 0 {
 		conditions = builder.And(conditions, table.F("UserID").Eq(req.UserID))
 	}
+	if req.CategoryKey != "" {
+		conditions = builder.And(conditions, table.F("CategoryKey").Eq(req.CategoryKey))
+	}
 	if req.Status != types.BOOK_STATUS_UNKNOWN {
 		conditions = builder.And(conditions, table.F("Status").Eq(req.Status))
+	}
+	if req.Selected != enumeration.BOOL_UNKNOWN {
+		conditions = builder.And(conditions, table.F("Selected").Eq(req.Selected))
 	}
 
 	return meta.FetchList(db, size, offset, conditions)

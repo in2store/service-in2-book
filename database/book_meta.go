@@ -9,7 +9,7 @@ import (
 //go:generate libtools gen model BookMeta --database DBIn2Book --table-name t_book_meta --with-comments
 // @def primary ID
 // @def unique_index U_book_id BookID
-// @def index I_author_status UserID Status
+// @def index I_author_status UserID CategoryKey Status
 // @def index I_category CategoryKey Status Selected
 type BookMeta struct {
 	presets.PrimaryID
