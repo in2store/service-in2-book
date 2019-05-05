@@ -35,6 +35,7 @@ type BookMetaFields struct {
 	CategoryKey  *github_com_johnnyeven_libtools_sqlx_builder.Column
 	UserID       *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Status       *github_com_johnnyeven_libtools_sqlx_builder.Column
+	Selected     *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Title        *github_com_johnnyeven_libtools_sqlx_builder.Column
 	CoverKey     *github_com_johnnyeven_libtools_sqlx_builder.Column
 	Comment      *github_com_johnnyeven_libtools_sqlx_builder.Column
@@ -51,6 +52,7 @@ var BookMetaField = struct {
 	CategoryKey  string
 	UserID       string
 	Status       string
+	Selected     string
 	Title        string
 	CoverKey     string
 	Comment      string
@@ -65,6 +67,7 @@ var BookMetaField = struct {
 	CategoryKey:  "CategoryKey",
 	UserID:       "UserID",
 	Status:       "Status",
+	Selected:     "Selected",
 	Title:        "Title",
 	CoverKey:     "CoverKey",
 	Comment:      "Comment",
@@ -84,6 +87,7 @@ func (bookMeta *BookMeta) Fields() *BookMetaFields {
 		CategoryKey:  table.F(BookMetaField.CategoryKey),
 		UserID:       table.F(BookMetaField.UserID),
 		Status:       table.F(BookMetaField.Status),
+		Selected:     table.F(BookMetaField.Selected),
 		Title:        table.F(BookMetaField.Title),
 		CoverKey:     table.F(BookMetaField.CoverKey),
 		Comment:      table.F(BookMetaField.Comment),
@@ -96,7 +100,7 @@ func (bookMeta *BookMeta) Fields() *BookMetaFields {
 }
 
 func (bookMeta *BookMeta) IndexFieldNames() []string {
-	return []string{"BookID", "CategoryKey", "ID", "Status", "UserID"}
+	return []string{"BookID", "CategoryKey", "ID", "Selected", "Status", "UserID"}
 }
 
 func (bookMeta *BookMeta) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_builder.Condition {
@@ -134,7 +138,7 @@ func (bookMeta *BookMeta) PrimaryKey() github_com_johnnyeven_libtools_sqlx.Field
 func (bookMeta *BookMeta) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{
 		"I_author_status": github_com_johnnyeven_libtools_sqlx.FieldNames{"UserID", "Status"},
-		"I_category":      github_com_johnnyeven_libtools_sqlx.FieldNames{"CategoryKey", "Status"},
+		"I_category":      github_com_johnnyeven_libtools_sqlx.FieldNames{"CategoryKey", "Status", "Selected"},
 	}
 }
 func (bookMeta *BookMeta) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
@@ -151,6 +155,7 @@ func (bookMeta *BookMeta) Comments() map[string]string {
 		"CreateTime":   "",
 		"Enabled":      "",
 		"ID":           "",
+		"Selected":     "是否精选",
 		"Status":       "状态",
 		"Title":        "标题",
 		"UpdateTime":   "",
@@ -611,6 +616,32 @@ func (bookMeta *BookMeta) BatchFetchByIDList(db *github_com_johnnyeven_libtools_
 
 	stmt := table.Select().
 		Comment("BookMeta.BatchFetchByIDList").
+		Where(condition)
+
+	err = db.Do(stmt).Scan(&bookMetaList).Err()
+
+	return
+}
+
+// deprecated
+func (bookMetaList *BookMetaList) BatchFetchBySelectedList(db *github_com_johnnyeven_libtools_sqlx.DB, selectedList []github_com_johnnyeven_libtools_courier_enumeration.Bool) (err error) {
+	*bookMetaList, err = (&BookMeta{}).BatchFetchBySelectedList(db, selectedList)
+	return
+}
+
+func (bookMeta *BookMeta) BatchFetchBySelectedList(db *github_com_johnnyeven_libtools_sqlx.DB, selectedList []github_com_johnnyeven_libtools_courier_enumeration.Bool) (bookMetaList BookMetaList, err error) {
+	if len(selectedList) == 0 {
+		return BookMetaList{}, nil
+	}
+
+	table := bookMeta.T()
+
+	condition := table.F("Selected").In(selectedList)
+
+	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
+
+	stmt := table.Select().
+		Comment("BookMeta.BatchFetchBySelectedList").
 		Where(condition)
 
 	err = db.Do(stmt).Scan(&bookMetaList).Err()

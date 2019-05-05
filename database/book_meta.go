@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/in2store/service-in2-book/constants/types"
+	"github.com/johnnyeven/libtools/courier/enumeration"
 	"github.com/johnnyeven/libtools/sqlx/presets"
 )
 
@@ -9,7 +10,7 @@ import (
 // @def primary ID
 // @def unique_index U_book_id BookID
 // @def index I_author_status UserID Status
-// @def index I_category CategoryKey Status
+// @def index I_category CategoryKey Status Selected
 type BookMeta struct {
 	presets.PrimaryID
 	// 业务ID
@@ -20,6 +21,8 @@ type BookMeta struct {
 	UserID uint64 `json:"userID,string" db:"F_user_id" sql:"bigint(64) unsigned NOT NULL"`
 	// 状态
 	Status types.BookStatus `json:"status" db:"F_status" sql:"tinyint(4) unsigned NOT NULL"`
+	// 是否精选
+	Selected enumeration.Bool `json:"selected" db:"F_selected" sql:"tinyint(4) unsigned NOT NULL"`
 	// 标题
 	Title string `json:"title" db:"F_title" sql:"varchar(255) NOT NULL"`
 	// 封面图片key

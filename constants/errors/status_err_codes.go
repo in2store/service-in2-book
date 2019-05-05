@@ -19,6 +19,8 @@ const (
 	NotFound status_error.StatusErrorCode = http.StatusNotFound*1e6 + ServiceStatusErrorCode + iota
 	// @errTalk 分类标识未找到
 	CategoryKeyNotFound
+	// @errTalk 文档未找到
+	BookNotFound
 )
 
 const (
