@@ -18,7 +18,7 @@ type SetBookTagBody struct {
 	TagID uint64 `json:"tagID,string"`
 }
 
-// 设置文档分类
+// 设置文档标签
 type SetBookTag struct {
 	httpx.MethodPost
 	// 文档ID
