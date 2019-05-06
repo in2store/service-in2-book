@@ -143,28 +143,3 @@ func GetBooksMeta(req GetBooksMetaRequest, size, offset int32, db *sqlx.DB) (res
 
 	return meta.FetchList(db, size, offset, conditions)
 }
-
-func SetBookTag(bookID, tagID uint64, db *sqlx.DB) error {
-	//category := &database.Category{
-	//	CategoryKey: categoryKey,
-	//}
-	//err := category.FetchByCategoryKey(db)
-	//if err != nil {
-	//	if sqlx.DBErr(err).IsNotFound() {
-	//		return errors.CategoryKeyNotFound
-	//	}
-	//	return err
-	//}
-	//bookCategory := &database.BookTag{
-	//	CategoryKey: categoryKey,
-	//	BookID:      bookID,
-	//}
-	//err = bookCategory.Create(db)
-	//if err != nil {
-	//	if sqlx.DBErr(err).IsConflict() {
-	//		return errors.BookCategoryConflict
-	//	}
-	//	return err
-	//}
-	return nil
-}

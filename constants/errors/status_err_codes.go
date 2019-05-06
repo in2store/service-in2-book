@@ -21,6 +21,8 @@ const (
 	CategoryKeyNotFound
 	// @errTalk 文档未找到
 	BookNotFound
+	// @errTalk 标签未找到
+	TagNotFound
 )
 
 const (
@@ -34,7 +36,7 @@ const (
 	// @errTalk 分类标识已存在
 	CategoryKeyConflict
 	// @errTalk 文档已在分类中
-	BookCategoryConflict
+	BookTagConflict
 )
 
 const (
