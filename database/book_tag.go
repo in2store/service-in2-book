@@ -8,6 +8,7 @@ import (
 // @def primary ID
 // @def unique_index U_book_tag TagID BookID
 // @def index I_tag TagID
+// @def index I_book BookID
 type BookTag struct {
 	presets.PrimaryID
 	// 标签ID

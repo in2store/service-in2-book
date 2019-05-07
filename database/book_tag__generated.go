@@ -103,7 +103,10 @@ func (bookTag *BookTag) PrimaryKey() github_com_johnnyeven_libtools_sqlx.FieldNa
 	return github_com_johnnyeven_libtools_sqlx.FieldNames{"ID"}
 }
 func (bookTag *BookTag) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
-	return github_com_johnnyeven_libtools_sqlx.Indexes{"I_tag": github_com_johnnyeven_libtools_sqlx.FieldNames{"TagID"}}
+	return github_com_johnnyeven_libtools_sqlx.Indexes{
+		"I_book": github_com_johnnyeven_libtools_sqlx.FieldNames{"BookID"},
+		"I_tag":  github_com_johnnyeven_libtools_sqlx.FieldNames{"TagID"},
+	}
 }
 func (bookTag *BookTag) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{"U_book_tag": github_com_johnnyeven_libtools_sqlx.FieldNames{"TagID", "BookID", "Enabled"}}

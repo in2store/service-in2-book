@@ -3,7 +3,9 @@ package modules
 import (
 	"github.com/in2store/service-in2-book/constants/errors"
 	"github.com/in2store/service-in2-book/database"
+	"github.com/johnnyeven/libtools/courier/enumeration"
 	"github.com/johnnyeven/libtools/sqlx"
+	"github.com/johnnyeven/libtools/sqlx/builder"
 )
 
 func CreateTag(tagID uint64, tagName string, db *sqlx.DB) (result *database.Tag, err error) {
@@ -38,4 +40,36 @@ func SetBookTag(bookID, tagID uint64, db *sqlx.DB) error {
 		return err
 	}
 	return nil
+}
+
+func GetTagsByBookID(bookID uint64, db *sqlx.DB) (result database.TagList, err error) {
+	bookTag := &database.BookTag{}
+	bookTags, err := bookTag.BatchFetchByBookIDList(db, []uint64{bookID})
+	if err != nil {
+		return
+	}
+
+	tagIDs := make([]uint64, 0)
+	for _, bookTag := range bookTags {
+		tagIDs = append(tagIDs, bookTag.TagID)
+	}
+	tag := &database.Tag{}
+	result, err = tag.BatchFetchByTagIDList(db, tagIDs)
+	return
+}
+
+func GetTagsOrderByHeat(db *sqlx.DB) (result database.TagList, err error) {
+	tag := &database.Tag{}
+	table := tag.T()
+
+	condition := builder.And(table.F("Enabled").Eq(enumeration.BOOL__TRUE))
+
+	stmt := table.
+		Select().
+		Comment("Tag.GetTagsOrderByHeat").
+		Where(condition).
+		OrderDescBy(table.F("Heat"))
+
+	err = db.Do(stmt).Scan(&result).Err()
+	return
 }
