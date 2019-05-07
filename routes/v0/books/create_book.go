@@ -2,6 +2,7 @@ package books
 
 import (
 	"context"
+	"github.com/in2store/service-in2-book/database"
 	"github.com/in2store/service-in2-book/global"
 	"github.com/in2store/service-in2-book/modules"
 	libModule "github.com/johnnyeven/eden-library/modules"
@@ -40,6 +41,7 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 	db := global.Config.MasterDB.Get()
 	tx := sqlx.NewTasks(db)
 
+	var meta *database.BookMeta
 	createMeta := func(db *sqlx.DB) error {
 		request := modules.CreateBookMetaParams{
 			UserID:       req.Body.UserID,
@@ -49,7 +51,7 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 			BookLanguage: req.Body.BookLanguage,
 			CodeLanguage: req.Body.CodeLanguage,
 		}
-		result, err = modules.CreateBookMeta(bookID, request, db)
+		meta, err = modules.CreateBookMeta(bookID, request, db)
 		if err != nil {
 			logrus.Errorf("[CreateBook] modules.CreateBookMeta err: %v, request: %+v", err, request)
 			return err
@@ -79,5 +81,5 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 		return nil, err
 	}
 
-	return
+	return meta, nil
 }
