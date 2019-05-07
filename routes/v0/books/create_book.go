@@ -30,10 +30,6 @@ func (req CreateBook) Path() string {
 	return ""
 }
 
-type CreateBookResult struct {
-	BookID uint64 `json:"bookID,string"`
-}
-
 func (req CreateBook) Output(ctx context.Context) (result interface{}, err error) {
 	bookID, err := libModule.NewUniqueID(global.Config.ClientID)
 	if err != nil {
@@ -53,7 +49,7 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 			BookLanguage: req.Body.BookLanguage,
 			CodeLanguage: req.Body.CodeLanguage,
 		}
-		_, err := modules.CreateBookMeta(bookID, request, db)
+		result, err = modules.CreateBookMeta(bookID, request, db)
 		if err != nil {
 			logrus.Errorf("[CreateBook] modules.CreateBookMeta err: %v, request: %+v", err, request)
 			return err
@@ -83,7 +79,5 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 		return nil, err
 	}
 
-	return CreateBookResult{
-		bookID,
-	}, nil
+	return
 }
