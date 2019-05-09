@@ -37,6 +37,8 @@ const (
 	CategoryKeyConflict
 	// @errTalk 文档已在分类中
 	BookTagConflict
+	// @errTalk 文档已存在
+	BookConflict
 )
 
 const (

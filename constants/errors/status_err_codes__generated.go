@@ -15,5 +15,6 @@ func init() {
 	status_error.StatusErrorCodes.Register("Conflict", 409099000, "操作冲突", "", true)
 	status_error.StatusErrorCodes.Register("CategoryKeyConflict", 409099001, "分类标识已存在", "", true)
 	status_error.StatusErrorCodes.Register("BookTagConflict", 409099002, "文档已在分类中", "", true)
+	status_error.StatusErrorCodes.Register("BookConflict", 409099003, "文档已存在", "", true)
 	status_error.StatusErrorCodes.Register("InternalError", 500099000, "内部处理错误", "", false)
 }

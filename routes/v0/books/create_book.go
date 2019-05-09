@@ -2,6 +2,7 @@ package books
 
 import (
 	"context"
+	"github.com/in2store/service-in2-book/constants/errors"
 	"github.com/in2store/service-in2-book/database"
 	"github.com/in2store/service-in2-book/global"
 	"github.com/in2store/service-in2-book/modules"
@@ -78,6 +79,9 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 	tx = tx.With(createMeta, createRepo)
 	err = tx.Do()
 	if err != nil {
+		if sqlx.DBErr(err).IsConflict() {
+			return nil, errors.BookConflict
+		}
 		logrus.Errorf("[CreateBook] transaction err: %v", err)
 		return nil, err
 	}
