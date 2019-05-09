@@ -46,6 +46,7 @@ func (req CreateBook) Output(ctx context.Context) (result interface{}, err error
 		request := modules.CreateBookMetaParams{
 			UserID:       req.Body.UserID,
 			Title:        req.Body.Title,
+			CategoryKey:  req.Body.CategoryKey,
 			CoverKey:     req.Body.CoverKey,
 			Comment:      req.Body.Comment,
 			BookLanguage: req.Body.BookLanguage,

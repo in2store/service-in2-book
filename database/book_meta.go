@@ -16,7 +16,7 @@ type BookMeta struct {
 	// 业务ID
 	BookID uint64 `json:"bookID,string" db:"F_book_id" sql:"bigint(64) unsigned NOT NULL"`
 	// 类别ID
-	CategoryKey string `json:"categoryKey" db:"F_category_key" sql:"varchar(32) NOT NULL"`
+	CategoryKey string `json:"categoryKey" db:"F_category_key" sql:"varchar(32) NOT NULL DEFAULT ''"`
 	// 作者ID
 	UserID uint64 `json:"userID,string" db:"F_user_id" sql:"bigint(64) unsigned NOT NULL"`
 	// 状态

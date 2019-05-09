@@ -13,6 +13,8 @@ type CreateBookMetaParams struct {
 	UserID uint64 `json:"userID,string"`
 	// 标题
 	Title string `json:"title"`
+	// 书籍分类
+	CategoryKey string `json:"categoryKey"`
 	// 封面图片key
 	CoverKey string `json:"coverKey" default:""`
 	// 简介
@@ -26,6 +28,7 @@ type CreateBookMetaParams struct {
 func CreateBookMeta(bookID uint64, req CreateBookMetaParams, db *sqlx.DB) (meta *database.BookMeta, err error) {
 	meta = &database.BookMeta{
 		BookID:       bookID,
+		CategoryKey:  req.CategoryKey,
 		UserID:       req.UserID,
 		Status:       types.BOOK_STATUS__READY,
 		Selected:     enumeration.BOOL__FALSE,
