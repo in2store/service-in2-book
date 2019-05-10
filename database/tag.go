@@ -7,6 +7,7 @@ import (
 //go:generate libtools gen model Tag --database DBIn2Book --table-name t_tag --with-comments
 // @def primary ID
 // @def unique_index U_tag_id TagID
+// @def unique_index U_name Name
 // @def index I_heat Heat
 type Tag struct {
 	presets.PrimaryID

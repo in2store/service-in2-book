@@ -39,6 +39,8 @@ const (
 	BookTagConflict
 	// @errTalk 文档已存在
 	BookConflict
+	// @errTalk 标签名称已存在
+	TagConflict
 )
 
 const (

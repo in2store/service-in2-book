@@ -2,11 +2,13 @@ package tags
 
 import (
 	"context"
+	"github.com/in2store/service-in2-book/constants/errors"
 	"github.com/in2store/service-in2-book/global"
 	"github.com/in2store/service-in2-book/modules"
 	libModule "github.com/johnnyeven/eden-library/modules"
 	"github.com/johnnyeven/libtools/courier"
 	"github.com/johnnyeven/libtools/courier/httpx"
+	"github.com/johnnyeven/libtools/sqlx"
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,6 +40,9 @@ func (req CreateTag) Output(ctx context.Context) (result interface{}, err error)
 	}
 	result, err = modules.CreateTag(id, req.Body.Name, db)
 	if err != nil {
+		if sqlx.DBErr(err).IsConflict() {
+			return nil, errors.TagConflict
+		}
 		logrus.Errorf("[CreateTag] modules.CreateTag err: %v, request: %+v", err, req.Body)
 	}
 	return

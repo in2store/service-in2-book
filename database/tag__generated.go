@@ -71,7 +71,7 @@ func (tag *Tag) Fields() *TagFields {
 }
 
 func (tag *Tag) IndexFieldNames() []string {
-	return []string{"Heat", "ID", "TagID"}
+	return []string{"Heat", "ID", "Name", "TagID"}
 }
 
 func (tag *Tag) ConditionByStruct() *github_com_johnnyeven_libtools_sqlx_builder.Condition {
@@ -110,7 +110,10 @@ func (tag *Tag) Indexes() github_com_johnnyeven_libtools_sqlx.Indexes {
 	return github_com_johnnyeven_libtools_sqlx.Indexes{"I_heat": github_com_johnnyeven_libtools_sqlx.FieldNames{"Heat"}}
 }
 func (tag *Tag) UniqueIndexes() github_com_johnnyeven_libtools_sqlx.Indexes {
-	return github_com_johnnyeven_libtools_sqlx.Indexes{"U_tag_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"TagID", "Enabled"}}
+	return github_com_johnnyeven_libtools_sqlx.Indexes{
+		"U_name":   github_com_johnnyeven_libtools_sqlx.FieldNames{"Name", "Enabled"},
+		"U_tag_id": github_com_johnnyeven_libtools_sqlx.FieldNames{"TagID", "Enabled"},
+	}
 }
 func (tag *Tag) Comments() map[string]string {
 	return map[string]string{
@@ -317,6 +320,119 @@ func (tag *Tag) SoftDeleteByID(db *github_com_johnnyeven_libtools_sqlx.DB) error
 		dbErr := github_com_johnnyeven_libtools_sqlx.DBErr(err)
 		if dbErr.IsConflict() {
 			return tag.DeleteByID(db)
+		}
+		return err
+	}
+	return nil
+}
+
+func (tag *Tag) FetchByName(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	tag.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := tag.T()
+	stmt := table.Select().
+		Comment("Tag.FetchByName").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("Name").Eq(tag.Name),
+			table.F("Enabled").Eq(tag.Enabled),
+		))
+
+	return db.Do(stmt).Scan(tag).Err()
+}
+
+func (tag *Tag) FetchByNameForUpdate(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	tag.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := tag.T()
+	stmt := table.Select().
+		Comment("Tag.FetchByNameForUpdate").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("Name").Eq(tag.Name),
+			table.F("Enabled").Eq(tag.Enabled),
+		)).
+		ForUpdate()
+
+	return db.Do(stmt).Scan(tag).Err()
+}
+
+func (tag *Tag) DeleteByName(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	tag.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := tag.T()
+	stmt := table.Delete().
+		Comment("Tag.DeleteByName").
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("Name").Eq(tag.Name),
+			table.F("Enabled").Eq(tag.Enabled),
+		))
+
+	return db.Do(stmt).Scan(tag).Err()
+}
+
+func (tag *Tag) UpdateByNameWithMap(db *github_com_johnnyeven_libtools_sqlx.DB, fieldValues github_com_johnnyeven_libtools_sqlx_builder.FieldValues) error {
+
+	if _, ok := fieldValues["UpdateTime"]; !ok {
+		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
+	}
+
+	tag.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := tag.T()
+
+	delete(fieldValues, "ID")
+
+	stmt := table.Update().
+		Comment("Tag.UpdateByNameWithMap").
+		Set(table.AssignsByFieldValues(fieldValues)...).
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("Name").Eq(tag.Name),
+			table.F("Enabled").Eq(tag.Enabled),
+		))
+
+	dbRet := db.Do(stmt).Scan(tag)
+	err := dbRet.Err()
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, _ := dbRet.RowsAffected()
+	if rowsAffected == 0 {
+		return tag.FetchByName(db)
+	}
+	return nil
+}
+
+func (tag *Tag) UpdateByNameWithStruct(db *github_com_johnnyeven_libtools_sqlx.DB, zeroFields ...string) error {
+	fieldValues := github_com_johnnyeven_libtools_sqlx.FieldValuesFromStructByNonZero(tag, zeroFields...)
+	return tag.UpdateByNameWithMap(db, fieldValues)
+}
+
+func (tag *Tag) SoftDeleteByName(db *github_com_johnnyeven_libtools_sqlx.DB) error {
+	tag.Enabled = github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE
+
+	table := tag.T()
+
+	fieldValues := github_com_johnnyeven_libtools_sqlx_builder.FieldValues{}
+	fieldValues["Enabled"] = github_com_johnnyeven_libtools_courier_enumeration.BOOL__FALSE
+
+	if _, ok := fieldValues["UpdateTime"]; !ok {
+		fieldValues["UpdateTime"] = github_com_johnnyeven_libtools_timelib.MySQLTimestamp(time.Now())
+	}
+
+	stmt := table.Update().
+		Comment("Tag.SoftDeleteByName").
+		Set(table.AssignsByFieldValues(fieldValues)...).
+		Where(github_com_johnnyeven_libtools_sqlx_builder.And(
+			table.F("Name").Eq(tag.Name),
+			table.F("Enabled").Eq(tag.Enabled),
+		))
+
+	dbRet := db.Do(stmt).Scan(tag)
+	err := dbRet.Err()
+	if err != nil {
+		dbErr := github_com_johnnyeven_libtools_sqlx.DBErr(err)
+		if dbErr.IsConflict() {
+			return tag.DeleteByName(db)
 		}
 		return err
 	}
@@ -551,6 +667,32 @@ func (tag *Tag) BatchFetchByIDList(db *github_com_johnnyeven_libtools_sqlx.DB, i
 
 	stmt := table.Select().
 		Comment("Tag.BatchFetchByIDList").
+		Where(condition)
+
+	err = db.Do(stmt).Scan(&tagList).Err()
+
+	return
+}
+
+// deprecated
+func (tagList *TagList) BatchFetchByNameList(db *github_com_johnnyeven_libtools_sqlx.DB, nameList []string) (err error) {
+	*tagList, err = (&Tag{}).BatchFetchByNameList(db, nameList)
+	return
+}
+
+func (tag *Tag) BatchFetchByNameList(db *github_com_johnnyeven_libtools_sqlx.DB, nameList []string) (tagList TagList, err error) {
+	if len(nameList) == 0 {
+		return TagList{}, nil
+	}
+
+	table := tag.T()
+
+	condition := table.F("Name").In(nameList)
+
+	condition = condition.And(table.F("Enabled").Eq(github_com_johnnyeven_libtools_courier_enumeration.BOOL__TRUE))
+
+	stmt := table.Select().
+		Comment("Tag.BatchFetchByNameList").
 		Where(condition)
 
 	err = db.Do(stmt).Scan(&tagList).Err()
