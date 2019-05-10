@@ -58,17 +58,24 @@ func GetTagsByBookID(bookID uint64, db *sqlx.DB) (result database.TagList, err e
 	return
 }
 
-func GetTagsOrderByHeat(db *sqlx.DB) (result database.TagList, err error) {
+func GetTagsOrderByHeat(filterZereHeat bool, orderByHeat bool, db *sqlx.DB) (result database.TagList, err error) {
 	tag := &database.Tag{}
 	table := tag.T()
 
 	condition := builder.And(table.F("Enabled").Eq(enumeration.BOOL__TRUE))
 
+	if filterZereHeat {
+		condition = builder.And(table.F("Heat").Neq(0))
+	}
+
 	stmt := table.
 		Select().
 		Comment("Tag.GetTagsOrderByHeat").
-		Where(condition).
-		OrderDescBy(table.F("Heat"))
+		Where(condition)
+
+	if orderByHeat {
+		stmt = stmt.OrderDescBy(table.F("Heat"))
+	}
 
 	err = db.Do(stmt).Scan(&result).Err()
 	return
