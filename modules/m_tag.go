@@ -42,6 +42,43 @@ func SetBookTag(bookID, tagID uint64, db *sqlx.DB) error {
 	return nil
 }
 
+func GetTagByName(name string, db *sqlx.DB) (result *database.Tag, err error) {
+	result = &database.Tag{
+		Name: name,
+	}
+	err = result.FetchByName(db)
+	if err != nil {
+		if sqlx.DBErr(err).IsNotFound() {
+			return nil, errors.TagNotFound
+		}
+		return nil, err
+	}
+	return
+}
+
+func GetBooksByTagID(tagID uint64, size, offset int32, db *sqlx.DB) (result database.BookMetaList, count int32, err error) {
+	bookTag := &database.BookTag{}
+	booksTag, err := bookTag.BatchFetchByTagIDList(db, []uint64{tagID})
+	if err != nil {
+		return nil, 0, err
+	}
+	if len(booksTag) == 0 {
+		return
+	}
+	bookIds := make([]uint64, 0)
+	for _, b := range booksTag {
+		bookIds = append(bookIds, b.BookID)
+	}
+	book := &database.BookMeta{}
+	table := book.T()
+	condition := builder.And(table.F("BookID").In(bookIds))
+	result, count, err = book.FetchList(db, size, offset, condition)
+	if err != nil {
+		return nil, 0, err
+	}
+	return
+}
+
 func GetTagsByBookID(bookID uint64, db *sqlx.DB) (result database.TagList, err error) {
 	bookTag := &database.BookTag{}
 	bookTags, err := bookTag.BatchFetchByBookIDList(db, []uint64{bookID})
